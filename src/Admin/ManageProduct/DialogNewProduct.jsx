@@ -30,9 +30,9 @@ export default function DialogNewProduct(props) {
     setProduct(_product);
   };
 
-  const myUploader = (e) => {
-    console.log(e.files);
-  };
+  // const myUploader = (e) => {
+  //   console.log(e.files);
+  // };
 
   return (
     <Fragment>
