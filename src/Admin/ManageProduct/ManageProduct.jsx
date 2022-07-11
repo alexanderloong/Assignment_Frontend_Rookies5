@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
 import { FilterMatchMode } from "primereact/api";
 import { DataTable } from "primereact/datatable";
@@ -7,6 +7,8 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 
 import axios from "axios";
+
+import ToolbarProduct from "./ToolbarProduct";
 
 // Component
 export default function ManageProduct() {
@@ -80,7 +82,7 @@ export default function ManageProduct() {
   // Variables
   const header2 = renderHeader2();
 
-  const statuses = [1, 2 ];
+  const statuses = [1, 2];
 
   // Call API
   useEffect(() => {
@@ -95,7 +97,7 @@ export default function ManageProduct() {
       })
       .then((res) => {
         console.log(res.data);
-        console.log(data);
+
         setCustomers2(res.data);
         setLoading2(false);
       })
@@ -106,66 +108,70 @@ export default function ManageProduct() {
 
   // Render
   return (
-    <div className="datatable-filter-demo">
-      <div className="card">
-        <DataTable
-          value={customers2}
-          paginator
-          className="p-datatable-customers"
-          rows={10}
-          dataKey="prod_id"
-          filters={filters2}
-          filterDisplay="row"
-          loading={loading2}
-          responsiveLayout="scroll"
-          globalFilterFields={[
-            "name",
-            "descripton",
-            "quantity",
-            "price",
-            "status",
-          ]}
-          header={header2}
-          emptyMessage="No products found."
-        >
-          <Column
-            field="name"
-            header="Name Product"
-            filter
-            filterPlaceholder="Search by name"
-            style={{ minWidth: "12rem" }}
-          />
-          <Column
-            header="Description"
-            field="descripton"
-            style={{ minWidth: "12rem" }}
-          />
-          <Column
-            header="Quantity"
-            field="quantity"
-            showFilterMenu={false}
-            filterMenuStyle={{ width: "14rem" }}
-            style={{ minWidth: "14rem" }}
-          />
-          <Column
-            header="Price"
-            field="price"
-            showFilterMenu={false}
-            filterMenuStyle={{ width: "14rem" }}
-            style={{ minWidth: "14rem" }}
-          />
-          <Column
-            field="status"
-            header="Status"
-            showFilterMenu={false}
-            filterMenuStyle={{ width: "14rem" }}
-            style={{ minWidth: "12rem" }}
-            body={statusBodyTemplate}
-            filter
-            filterElement={statusRowFilterTemplate}
-          />
-        </DataTable>
+    <Fragment>
+      <ToolbarProduct />
+
+      <div className="datatable-filter-demo">
+        <div className="card">
+          <DataTable
+            value={customers2}
+            paginator
+            className="p-datatable-customers"
+            rows={10}
+            dataKey="prod_id"
+            filters={filters2}
+            filterDisplay="row"
+            loading={loading2}
+            responsiveLayout="scroll"
+            globalFilterFields={[
+              "name",
+              "descripton",
+              "quantity",
+              "price",
+              "status",
+            ]}
+            header={header2}
+            emptyMessage="No products found."
+          >
+            <Column
+              field="name"
+              header="Name Product"
+              filter
+              filterPlaceholder="Search by name"
+              style={{ minWidth: "12rem" }}
+            />
+            <Column
+              header="Description"
+              field="descripton"
+              style={{ minWidth: "12rem" }}
+            />
+            <Column
+              header="Quantity"
+              field="quantity"
+              showFilterMenu={false}
+              filterMenuStyle={{ width: "14rem" }}
+              style={{ minWidth: "14rem" }}
+            />
+            <Column
+              header="Price"
+              field="price"
+              showFilterMenu={false}
+              filterMenuStyle={{ width: "14rem" }}
+              style={{ minWidth: "14rem" }}
+            />
+            <Column
+              field="status"
+              header="Status"
+              showFilterMenu={false}
+              filterMenuStyle={{ width: "14rem" }}
+              style={{ minWidth: "12rem" }}
+              body={statusBodyTemplate}
+              filter
+              filterElement={statusRowFilterTemplate}
+            />
+          </DataTable>
+        </div>
       </div>
-    </div>
+    </Fragment>
   );
 }
