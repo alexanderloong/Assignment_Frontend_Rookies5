@@ -26,6 +26,8 @@ export default function ManageCategory() {
 
   const [loading2, setLoading2] = useState(true);
   const [globalFilterValue2, setGlobalFilterValue2] = useState("");
+  const [selectedProduct1, setSelectedProduct1] = useState(null);
+  const [force, setForce] = useState(0);
 
   // Handles
   const onGlobalFilterChange2 = (e) => {
@@ -103,12 +105,18 @@ export default function ManageCategory() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [force]);
 
   // Render
   return (
     <Fragment>
-      <ToolbarCategory />
+      <ToolbarCategory
+        selectedProduct1={selectedProduct1}
+        setForce={() => {
+          setForce(force + 1);
+          setLoading2(true);
+        }}
+      />
 
       <div className="datatable-filter-demo">
         <div className="card">
@@ -117,12 +125,15 @@ export default function ManageCategory() {
             paginator
             className="p-datatable-customers"
             rows={10}
-            dataKey="prod_id"
+            dataKey="cat_id"
             filters={filters2}
             filterDisplay="row"
             loading={loading2}
             responsiveLayout="scroll"
             globalFilterFields={["name", "description", "status"]}
+            selectionMode="single"
+            selection={selectedProduct1}
+            onSelectionChange={(e) => setSelectedProduct1(e.value)}
             header={header2}
             emptyMessage="No products found."
           >
