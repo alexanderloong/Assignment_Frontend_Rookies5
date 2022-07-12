@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
@@ -7,15 +7,19 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { InputNumber } from "primereact/inputnumber";
 import { classNames } from "primereact/utils";
 
+import axios from "axios";
+
 export default function DialogNewProduct(props) {
   // Variables
   const setProduct = props.setProduct;
   const product = props.product;
   const submitted = props.submitted;
 
-  const categoryItems = [
-    { label: "Phone", value: "Lap" },
-    { label: "Laptop", value: "Phone" },
+  const [categoryItems, setCategoryItems] = useState([]);
+
+  const statuses = [
+    { label: "Active", value: "Active" },
+    { label: "Unactive", value: "Unactive" },
   ];
 
   // Hooks
@@ -33,6 +37,26 @@ export default function DialogNewProduct(props) {
   // const myUploader = (e) => {
   //   console.log(e.files);
   // };
+
+  // Call api
+  useEffect(() => {
+    let token =
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NGNlMjQwOS01NGQ3LTRkMGUtOTQ2MS0xMDYyYzAzM2ZmZDIsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzUzMTk0MSwiZXhwIjoxNjU3NjE4MzQxfQ.5uHp9qCimYgV1bZxQgd98lfDDk9f0V6NPBES4_KhGjnjrJhq_cY1oV64VJY67lnx43xDn5mVCQ3MfwArQY9SbA";
+    axios
+      .get(`http://127.0.0.1:8080/category`, {
+        headers: {
+          Authorization: "Bearer " + token, //the token is a variable which holds the token
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        setCategoryItems(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Fragment>
@@ -65,6 +89,8 @@ export default function DialogNewProduct(props) {
       <div className="field">
         <label className="mb-3">Category</label>
         <Dropdown
+          optionLabel="name"
+          optionValue="cat_id"
           value={product.cat_id}
           options={categoryItems}
           onChange={(e) => onInputChange(e, "cat_id")}
@@ -98,6 +124,17 @@ export default function DialogNewProduct(props) {
           />
         </div>
       </div>
+
+      <div className="field">
+        <label className="mb-3">Status</label>
+        <Dropdown
+          value={product.status}
+          options={statuses}
+          onChange={(e) => onInputChange(e, "status")}
+          placeholder="Select a Status"
+        />
+      </div>
+
       <div className="field col">
         <label htmlFor="image" className="mb-3">
           Image

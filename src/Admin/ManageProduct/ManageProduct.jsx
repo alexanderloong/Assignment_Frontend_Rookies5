@@ -14,6 +14,7 @@ import ToolbarProduct from "./ToolbarProduct";
 export default function ManageProduct() {
   // Hooks
   const [customers2, setCustomers2] = useState(null);
+  const [selectedProduct1, setSelectedProduct1] = useState(null);
 
   const [filters2, setFilters2] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -26,6 +27,7 @@ export default function ManageProduct() {
 
   const [loading2, setLoading2] = useState(true);
   const [globalFilterValue2, setGlobalFilterValue2] = useState("");
+  const [force, setforce] = useState(0);
 
   // Handles
   const onGlobalFilterChange2 = (e) => {
@@ -82,12 +84,12 @@ export default function ManageProduct() {
   // Variables
   const header2 = renderHeader2();
 
-  const statuses = [1, 2];
+  const statuses = ["Active", "Unactive"];
 
   // Call API
   useEffect(() => {
     let token =
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NGNlMjQwOS01NGQ3LTRkMGUtOTQ2MS0xMDYyYzAzM2ZmZDIsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzUzMTk0MSwiZXhwIjoxNjU3NjE4MzQxfQ.5uHp9qCimYgV1bZxQgd98lfDDk9f0V6NPBES4_KhGjnjrJhq_cY1oV64VJY67lnx43xDn5mVCQ3MfwArQY9SbA";
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjM5OWFhYi0zYWQ4LTQ1Y2UtOWVkOS03MDZhOTFkNjg0NzAsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzYxODM4OCwiZXhwIjoxNjU3NzA0Nzg4fQ.jEy1iypR4IbVKEazKp2JNSp4rt-FSjSPuLMGN_hO9_vib00mSKkJi61KogUyCeDTs6rLFA4CSKYntHCvZ63W2Q";
 
     axios
       .get(`http://127.0.0.1:8080/product`, {
@@ -104,12 +106,16 @@ export default function ManageProduct() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [force]);
 
   // Render
   return (
     <Fragment>
-      <ToolbarProduct />
+      <ToolbarProduct
+        setForce={() => setforce(force + 1)}
+        selectedProduct1={selectedProduct1}
+        setSelectedProduct1={setSelectedProduct1}
+      />
 
       <div className="datatable-filter-demo">
         <div className="card">
@@ -123,6 +129,9 @@ export default function ManageProduct() {
             filterDisplay="row"
             loading={loading2}
             responsiveLayout="scroll"
+            selectionMode="single"
+            selection={selectedProduct1}
+            onSelectionChange={(e) => setSelectedProduct1(e.value)}
             globalFilterFields={[
               "name",
               "descripton",
