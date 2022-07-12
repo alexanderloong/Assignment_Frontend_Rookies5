@@ -84,7 +84,7 @@ export default function ManageCategory() {
   // Variables
   const header2 = renderHeader2();
 
-  const statuses = [1, 2];
+  const statuses = ["Active", "Unactive"];
 
   // Call API
   useEffect(() => {
@@ -112,6 +112,7 @@ export default function ManageCategory() {
     <Fragment>
       <ToolbarCategory
         selectedProduct1={selectedProduct1}
+        setSelectedProduct1={setSelectedProduct1}
         setForce={() => {
           setForce(force + 1);
           setLoading2(true);

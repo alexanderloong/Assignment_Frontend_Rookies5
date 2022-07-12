@@ -51,7 +51,7 @@ export default function DialogNewProduct(props) {
         )}
       </div>
       <div className="field">
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">Descripton</label>
         <InputTextarea
           id="description"
           value={product.descripton}

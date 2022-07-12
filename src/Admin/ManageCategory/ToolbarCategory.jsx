@@ -9,18 +9,22 @@ import { Dialog } from "primereact/dialog";
 import axios from "axios";
 
 import DialogNewCategory from "./DialogNewCategory";
+import DialogUpdateCategory from "./DialogUpdateCategory";
 
 export default function ToolbarCategory(props) {
   // Variables
   let emptyProduct = {
     description: "",
     name: "",
+    status: "",
   };
 
   const selectedProduct1 = props.selectedProduct1;
+  const setSelectedProduct1 = props.setSelectedProduct1;
 
   // Hooks
   const [productDialog, setProductDialog] = useState(false);
+  const [productDialog2, setProductDialog2] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [product, setProduct] = useState(emptyProduct);
   const toast = useRef(null);
@@ -32,9 +36,16 @@ export default function ToolbarCategory(props) {
     setProductDialog(true);
   };
 
+  const openUpdate = () => {
+    setProduct(selectedProduct1);
+    setSubmitted(false);
+    setProductDialog2(true);
+  };
+
   const hideDialog = () => {
     setSubmitted(false);
     setProductDialog(false);
+    setProductDialog2(false);
   };
 
   const saveProduct = () => {
@@ -55,6 +66,23 @@ export default function ToolbarCategory(props) {
     }
   };
 
+  const updateProduct = () => {
+    setSubmitted(true);
+    updateCategory();
+
+    if (product.name.trim()) {
+      toast.current.show({
+        severity: "success",
+        summary: "Successful",
+        detail: "Category Updated",
+        life: 3000,
+      });
+
+      setProductDialog2(false);
+      setProduct(emptyProduct);
+    }
+  };
+
   const confirmDeleteSelected = () => {
     setSubmitted(true);
     deleteCategory();
@@ -66,6 +94,7 @@ export default function ToolbarCategory(props) {
       life: 3000,
     });
 
+    setSelectedProduct1(null);
     setProductDialog(false);
     setProduct(emptyProduct);
   };
@@ -81,6 +110,29 @@ export default function ToolbarCategory(props) {
           Authorization: "Bearer " + token, //the token is a variable which holds the token
         },
       })
+      .then((res) => {
+        console.log(res.data);
+        props.setForce();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const updateCategory = () => {
+    let token =
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NGNlMjQwOS01NGQ3LTRkMGUtOTQ2MS0xMDYyYzAzM2ZmZDIsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzU1ODkxNCwiZXhwIjoxNjU3NjQ1MzE0fQ.GSxyZE9FQLm5d4fgTLPY8wVP9gB1qJ-rCrEEpO3KQCgBHrNAhd7bbDRT0Ip2fBBycikhKqxFk-4YBM45xrkdnw";
+
+    axios
+      .put(
+        `http://127.0.0.1:8080/category/${selectedProduct1.cat_id}`,
+        product,
+        {
+          headers: {
+            Authorization: "Bearer " + token, //the token is a variable which holds the token
+          },
+        }
+      )
       .then((res) => {
         console.log(res.data);
         props.setForce();
@@ -116,14 +168,22 @@ export default function ToolbarCategory(props) {
         <Button
           label="New"
           icon="pi pi-plus"
-          className="p-button-success me-2"
+          className="p-button-success me-3"
           onClick={openNew}
         />
         <Button
           label="Delete"
           icon="pi pi-trash"
-          className="p-button-danger"
+          className="p-button-danger  me-3"
           onClick={confirmDeleteSelected}
+          disabled={!selectedProduct1}
+        />
+
+        <Button
+          label="Update"
+          icon="pi pi-sync"
+          className="p-button-info"
+          onClick={openUpdate}
           disabled={!selectedProduct1}
         />
       </React.Fragment>
@@ -146,6 +206,23 @@ export default function ToolbarCategory(props) {
       />
     </React.Fragment>
   );
+
+  const upCategoryDialogFooter = (
+    <React.Fragment>
+      <Button
+        label="Cancel"
+        icon="pi pi-times"
+        className="p-button-text"
+        onClick={hideDialog}
+      />
+      <Button
+        label="Update"
+        icon="pi pi-check"
+        className="p-button-text"
+        onClick={updateProduct}
+      />
+    </React.Fragment>
+  );
   // Render
   return (
     <Fragment>
@@ -163,6 +240,22 @@ export default function ToolbarCategory(props) {
         onHide={hideDialog}
       >
         <DialogNewCategory
+          product={product}
+          setProduct={setProduct}
+          submitted={submitted}
+        />
+      </Dialog>
+
+      <Dialog
+        visible={productDialog2}
+        style={{ width: "600px" }}
+        header="Product Details"
+        modal
+        className="p-fluid"
+        footer={upCategoryDialogFooter}
+        onHide={hideDialog}
+      >
+        <DialogUpdateCategory
           product={product}
           setProduct={setProduct}
           submitted={submitted}

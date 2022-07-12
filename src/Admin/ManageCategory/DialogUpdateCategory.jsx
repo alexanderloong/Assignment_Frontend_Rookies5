@@ -3,10 +3,9 @@ import { Fragment } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { classNames } from "primereact/utils";
-
 import { Dropdown } from "primereact/dropdown";
 
-export default function DialogNewCategory(props) {
+export default function DialogUpdateCategory(props) {
   // Variables
   const setProduct = props.setProduct;
   const product = props.product;
@@ -55,13 +54,14 @@ export default function DialogNewCategory(props) {
         <label htmlFor="description">Description</label>
         <InputTextarea
           id="description"
-          value={product.descripton}
+          value={product.description}
           onChange={(e) => onInputChange(e, "description")}
           required
           rows={3}
           cols={20}
         />
       </div>
+
       <div className="field">
         <label htmlFor="description">Status</label>
 
