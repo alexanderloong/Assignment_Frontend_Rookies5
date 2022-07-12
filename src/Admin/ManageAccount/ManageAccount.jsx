@@ -28,13 +28,13 @@ export default function ManageAccount() {
   const handleEnable = () => {
     enableAccount();
 
-    // setForce(force + 1);
+    setLoading(true);
   };
 
   const handleDisable = () => {
     disableAccount();
 
-    // setForce(force + 1);
+    setLoading(true);
   };
 
   // Subcomponent
@@ -81,13 +81,16 @@ export default function ManageAccount() {
 
   const enableAccount = () => {
     axios
-      .patch(`http://127.0.0.1:8080/users/${selectedAccount.account_id}`, {
+      .get(`http://127.0.0.1:8080/users/enable/${selectedAccount.account_id}`, {
         headers: {
           Authorization: "Bearer " + token, //the token is a variable which holds the token
         },
       })
       .then((res) => {
         console.log(res.data);
+
+        setLoading(true);
+
         setForce(force + 1);
       })
       .catch((err) => {
@@ -100,12 +103,13 @@ export default function ManageAccount() {
       headers: { Authorization: "Bearer " + token },
     };
     axios
-      .patch(
+      .get(
         `http://127.0.0.1:8080/users/disable/${selectedAccount.account_id}`,
         config
       )
       .then((res) => {
         console.log(res.data);
+        setLoading(true);
         setForce(force + 1);
       })
       .catch((err) => {

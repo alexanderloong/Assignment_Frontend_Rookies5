@@ -77,6 +77,7 @@ export default function ToolbarProduct(props) {
         life: 3000,
       });
 
+      setSelectedProduct1(null);
       setProductDialog2(false);
       setProduct(emptyProduct);
     }
