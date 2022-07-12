@@ -89,7 +89,7 @@ export default function ManageCategory() {
   // Call API
   useEffect(() => {
     let token =
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5NGNlMjQwOS01NGQ3LTRkMGUtOTQ2MS0xMDYyYzAzM2ZmZDIsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzUzMTk0MSwiZXhwIjoxNjU3NjE4MzQxfQ.5uHp9qCimYgV1bZxQgd98lfDDk9f0V6NPBES4_KhGjnjrJhq_cY1oV64VJY67lnx43xDn5mVCQ3MfwArQY9SbA";
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjM5OWFhYi0zYWQ4LTQ1Y2UtOWVkOS03MDZhOTFkNjg0NzAsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzYxODM4OCwiZXhwIjoxNjU3NzA0Nzg4fQ.jEy1iypR4IbVKEazKp2JNSp4rt-FSjSPuLMGN_hO9_vib00mSKkJi61KogUyCeDTs6rLFA4CSKYntHCvZ63W2Q";
     axios
       .get(`http://127.0.0.1:8080/category`, {
         headers: {
@@ -97,9 +97,8 @@ export default function ManageCategory() {
         },
       })
       .then((res) => {
-        console.log(res.data);
-
         setCustomers2(res.data);
+
         setLoading2(false);
       })
       .catch((err) => {
