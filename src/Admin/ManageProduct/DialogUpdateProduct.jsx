@@ -1,28 +1,33 @@
 import { Fragment, useState, useEffect } from "react";
 
-import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
-import { FileUpload } from "primereact/fileupload";
-import { InputTextarea } from "primereact/inputtextarea";
 import { InputNumber } from "primereact/inputnumber";
+
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { classNames } from "primereact/utils";
+import { Dropdown } from "primereact/dropdown";
 
 import axios from "axios";
 
-export default function DialogNewProduct(props) {
+export default function DialogUpdateProduct(props) {
   // Variables
   const setProduct = props.setProduct;
   const product = props.product;
   const submitted = props.submitted;
 
-  const [categoryItems, setCategoryItems] = useState([]);
-
   const statuses = [
-    { label: "Active", value: "Active" },
-    { label: "Unactive", value: "Unactive" },
+    {
+      label: "Active",
+      value: "Active",
+    },
+    {
+      label: "Unactive",
+      value: "Unactive",
+    },
   ];
 
   // Hooks
+  const [categoryItems, setCategoryItems] = useState([]);
 
   // Handles
   const onInputChange = (e, name) => {
@@ -33,10 +38,6 @@ export default function DialogNewProduct(props) {
     console.log(_product);
     setProduct(_product);
   };
-
-  // const myUploader = (e) => {
-  //   console.log(e.files);
-  // };
 
   // Call api
   useEffect(() => {
@@ -133,14 +134,6 @@ export default function DialogNewProduct(props) {
           onChange={(e) => onInputChange(e, "status")}
           placeholder="Select a Status"
         />
-      </div>
-
-      <div className="field col">
-        <label htmlFor="image" className="mb-3">
-          Image
-        </label>
-
-        <FileUpload name="image" url="./upload" mode="basic" />
       </div>
     </Fragment>
   );
