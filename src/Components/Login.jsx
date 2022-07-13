@@ -26,7 +26,6 @@ export default function Register() {
   };
 
   const onSubmit = (data, form) => {
-    console.log(data);
     loginAccount(data);
 
     // form.restart();
@@ -44,7 +43,7 @@ export default function Register() {
     axios
       .post(`http://127.0.0.1:8080/auth/signin`, data)
       .then((res) => {
-        console.log(res.data);
+        localStorage.setItem("token", JSON.stringify(res.data.accessToken));
       })
       .catch((err) => {
         console.log(err);
