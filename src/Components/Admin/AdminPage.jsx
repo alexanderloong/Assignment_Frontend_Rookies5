@@ -5,6 +5,7 @@ import ManageProduct from "./ManageProduct/ManageProduct";
 import ManageCategory from "./ManageCategory/ManageCategory";
 import InformationAccount from "./InformationAccount";
 import ManageAccount from "./ManageAccount/ManageAccount";
+import Container from "react-bootstrap/esm/Container";
 
 // Component
 export default function AdminPage() {
@@ -33,8 +34,10 @@ export default function AdminPage() {
   // Render
   return (
     <Fragment>
-      <HeadMenu setActiveIndex={setActiveIndex} />
-      <MainDetail />
+      <Container className="text-center">
+        <HeadMenu setActiveIndex={setActiveIndex} />
+        <MainDetail />
+      </Container>
     </Fragment>
   );
 }
