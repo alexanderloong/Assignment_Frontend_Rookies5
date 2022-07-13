@@ -88,14 +88,8 @@ export default function ManageCategory() {
 
   // Call API
   useEffect(() => {
-    let token =
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjM5OWFhYi0zYWQ4LTQ1Y2UtOWVkOS03MDZhOTFkNjg0NzAsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzYxODM4OCwiZXhwIjoxNjU3NzA0Nzg4fQ.jEy1iypR4IbVKEazKp2JNSp4rt-FSjSPuLMGN_hO9_vib00mSKkJi61KogUyCeDTs6rLFA4CSKYntHCvZ63W2Q";
     axios
-      .get(`http://127.0.0.1:8080/category`, {
-        headers: {
-          Authorization: "Bearer " + token, //the token is a variable which holds the token
-        },
-      })
+      .get(`http://127.0.0.1:8080/category`)
       .then((res) => {
         setCustomers2(res.data);
 

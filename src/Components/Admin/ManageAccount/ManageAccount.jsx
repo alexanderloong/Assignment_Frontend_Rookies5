@@ -10,8 +10,7 @@ import { Column } from "primereact/column";
 // Component
 export default function ManageAccount() {
   // Variables
-  const token =
-    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjM5OWFhYi0zYWQ4LTQ1Y2UtOWVkOS03MDZhOTFkNjg0NzAsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzYxODM4OCwiZXhwIjoxNjU3NzA0Nzg4fQ.jEy1iypR4IbVKEazKp2JNSp4rt-FSjSPuLMGN_hO9_vib00mSKkJi61KogUyCeDTs6rLFA4CSKYntHCvZ63W2Q";
+  const token = JSON.parse(localStorage.getItem("token"));
 
   // Hooks
   const [accounts, setAccounts] = useState(null);
@@ -20,10 +19,6 @@ export default function ManageAccount() {
   const [selectedAccount, setSelectedAccount] = useState();
 
   // Handles
-
-  useEffect(() => {
-    getAccounts();
-  }, [force]);
 
   const handleEnable = () => {
     enableAccount();
@@ -61,7 +56,7 @@ export default function ManageAccount() {
   };
 
   // Call API
-  const getAccounts = () => {
+  useEffect(() => {
     axios
       .get(`http://127.0.0.1:8080/users`, {
         headers: {
@@ -77,7 +72,7 @@ export default function ManageAccount() {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [force, token]);
 
   const enableAccount = () => {
     axios

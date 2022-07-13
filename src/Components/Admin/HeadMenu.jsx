@@ -2,11 +2,16 @@ import { Fragment } from "react";
 
 import { Button } from "primereact/button";
 
-
 // Component
 export default function HeadMenu(props) {
+  // Handles
+  const signOut = () => {
+    localStorage.removeItem("token");
 
-    // Render
+    window.location.replace("http://localhost:3000/");
+  };
+
+  // Render
   return (
     <Fragment>
       <h1>Admin Page</h1>
@@ -32,6 +37,7 @@ export default function HeadMenu(props) {
           className="p-button-text"
           label="Manage Customer"
         />
+        <Button onClick={signOut} className="p-button-text" label="Logout" />
       </div>
     </Fragment>
   );

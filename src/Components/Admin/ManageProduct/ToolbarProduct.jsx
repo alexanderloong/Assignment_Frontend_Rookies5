@@ -19,8 +19,7 @@ export default function ToolbarProduct(props) {
     price: "",
     quantity: null,
   };
-  const token =
-    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNjM5OWFhYi0zYWQ4LTQ1Y2UtOWVkOS03MDZhOTFkNjg0NzAsYWRtaW5AZ21haWwuY29tIiwiaXNzIjoiQWxleGFuZGVyIiwicm9sZXMiOjEsImlhdCI6MTY1NzYxODM4OCwiZXhwIjoxNjU3NzA0Nzg4fQ.jEy1iypR4IbVKEazKp2JNSp4rt-FSjSPuLMGN_hO9_vib00mSKkJi61KogUyCeDTs6rLFA4CSKYntHCvZ63W2Q";
+  const token = localStorage.getItem("token");
 
   const selectedProduct1 = props.selectedProduct1;
   const setSelectedProduct1 = props.setSelectedProduct1;

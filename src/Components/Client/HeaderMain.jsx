@@ -2,10 +2,21 @@ import React, { Fragment } from "react";
 
 import { Toolbar } from "primereact/toolbar";
 import { Button } from "primereact/button";
-import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export function HeaderMain() {
+  // Hooks
+  let navigate = useNavigate();
+
   // Variables
+
+  // Handles
+  const signOut = () => {
+    if (localStorage.getItem("token") !== null)
+      localStorage.removeItem("token");
+
+    navigate("/signin");
+  };
 
   // Sub components
   const leftContents = (
@@ -23,15 +34,14 @@ export function HeaderMain() {
       <Button
         icon="pi pi-user"
         className="p-button-rounded  p-button-text me-2"
+        onClick={signOut}
       />
     </Fragment>
   );
 
   return (
     <Fragment>
-      <Container>
-        <Toolbar left={leftContents} right={rightContents} />
-      </Container>
+      <Toolbar left={leftContents} right={rightContents} />
     </Fragment>
   );
 }

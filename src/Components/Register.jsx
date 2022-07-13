@@ -10,14 +10,17 @@ import { Divider } from "primereact/divider";
 import { classNames } from "primereact/utils";
 import { RadioButton } from "primereact/radiobutton";
 
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 import "./FormDemo.css";
 
 export default function Register() {
   const [showMessage, setShowMessage] = useState(false);
-  const [formData, setFormData] = useState({});
   const [value, setValue] = useState();
+
+  let navigate = useNavigate();
 
   const validate = (data) => {
     let errors = {};
@@ -113,9 +116,9 @@ export default function Register() {
           ></i>
           <h5>Registration Successful!</h5>
           <p style={{ lineHeight: 1.5, textIndent: "1rem" }}>
-            Your account is registered under name <b>{formData.name}</b> ; it'll
-            be valid next 30 days without activation. Please check{" "}
-            <b>{formData.email}</b> for activation instructions.
+            Your account is registered under name <b>name</b> ; it'll be valid
+            next 30 days without activation. Please check <b>email</b> for
+            activation instructions.
           </p>
         </div>
       </Dialog>
@@ -330,7 +333,12 @@ export default function Register() {
                   )}
                 />
 
-                <Button type="submit" label="Submit" className="mt-2" />
+                <Button type="submit" label="Submit" className="mt-2 mb-2" />
+                <Button
+                  label="Login"
+                  className="p-button-info p-button-text"
+                  onClick={() => navigate("/signin")}
+                />
               </form>
             )}
           />

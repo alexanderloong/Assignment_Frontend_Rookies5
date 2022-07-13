@@ -3,12 +3,16 @@ import { Form, Field } from "react-final-form";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
 import "./FormDemo.css";
 
 export default function Register() {
+  // Hooks
+  let navigate = useNavigate();
+
   const validate = (data) => {
     let errors = {};
 
@@ -44,6 +48,8 @@ export default function Register() {
       .post(`http://127.0.0.1:8080/auth/signin`, data)
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+
+        window.location.replace("http://localhost:3000/");
       })
       .catch((err) => {
         console.log(err);
@@ -111,7 +117,12 @@ export default function Register() {
                   )}
                 />
 
-                <Button type="submit" label="Submit" className="mt-2" />
+                <Button type="submit" label="Submit" className="mt-2 mb-2" />
+                <Button
+                  label="Register"
+                  className="p-button-info p-button-text"
+                  onClick={() => navigate("/signup")}
+                />
               </form>
             )}
           />
